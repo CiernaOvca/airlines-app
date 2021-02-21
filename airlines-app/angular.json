@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "airlines-app"
+    }
+  },
+  "defaultProject": "airlines-app",
+  "cli": {
+    "analytics": "bc5cbbb0-1632-403a-9eae-7ce1ddd86337"
+  }
 }
