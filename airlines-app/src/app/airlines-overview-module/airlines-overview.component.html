@@ -1,0 +1,37 @@
+<p-menubar [model]="items"></p-menubar>
+<div style="margin-bottom: 50px;"></div>
+
+<p-table 
+    [value]="airlinesData"  
+
+    [rows]="10" 
+    [lazy]="true"
+    [loading]="tableLoading"
+
+    [paginator]="true"
+    [responsive]="true"
+    [totalRecords]="totalRecords"
+
+    (onLazyLoad)="loadData($event)"
+    [(first)]="first"
+>
+  <ng-template pTemplate="header">
+      <tr>
+          <th *ngFor="let col of columns">
+              {{col.label}}
+          </th>
+      </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-airline>
+      <tr>
+          <td *ngFor="let col of columns">
+            {{airline[col.field]}}
+          </td>
+      </tr>
+  </ng-template>
+
+  <ng-template pTemplate="summary">
+  </ng-template>
+
+</p-table>
