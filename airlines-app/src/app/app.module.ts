@@ -6,12 +6,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AirlinesOverviewComponent } from './airlines-overview-module/airlines-overview.component';
-import { DataProviderService } from './data-provider.service';
+import { DataProviderService } from './services/data-provider.service';
 
 // primeng components
+import { InputSwitchModule } from 'primeng/inputswitch'
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
-import {TableModule} from 'primeng/table';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import {TableModule} from 'primeng/table';
     HttpClientModule,
 
     BrowserAnimationsModule,
+    InputSwitchModule,
     MenubarModule,
     ButtonModule,
     TableModule,

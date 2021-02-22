@@ -1,7 +1,9 @@
 <p-menubar [model]="items"></p-menubar>
-<div style="margin-bottom: 50px;"></div>
 
-<p-table 
+<div style="padding: 50px 25% 50px 25%;"> 
+  <p-table 
+    styleClass="p-datatable-sm"
+    [autoLayout]="true"
     [value]="airlinesData"  
 
     [rows]="10" 
@@ -14,24 +16,50 @@
 
     (onLazyLoad)="loadData($event)"
     [(first)]="first"
->
-  <ng-template pTemplate="header">
-      <tr>
-          <th *ngFor="let col of columns">
-              {{col.label}}
-          </th>
-      </tr>
+  >
+    <ng-template pTemplate="header">
+        <tr>
+            <th *ngFor="let col of columns" [ngStyle]="{'display': col.display, 'width': col.width }">
+                {{col.header}}
+            </th>
+            <th style="width: 20%;"></th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-airline>
+        <tr>
+            <td *ngFor="let col of columns" [ngStyle]="{'display': col.display}">
+              {{airline[col.field]}}
+            </td>
+            <td style="width: 50px;">
+              <button 
+                [ngStyle]="{'color': (this.favorites && this.favorites.includes(airline['code'])) ? 'pink' : 'gray'}"
+                pButton 
+                pRipple 
+                type="button" 
+                icon="pi pi-heart" 
+                class="p-button-rounded p-button-text p-button-plain"
+                (click)="addToFavorites(airline.code)">
+              </button>
+              <button 
+                pButton 
+                pRipple 
+                type="button" 
+                icon="pi pi-search" 
+                class="p-button-rounded p-button-text p-button-plain"
+                (click)="showAirlineDetail(airline.code)">
+              </button>
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="summary" >
+      <p>Show only favorite airlines</p>
+      <p-inputSwitch 
+        [(ngModel)]="showFavorites" 
+        (onChange)="showFavoriteAirlines($event)" >
+      </p-inputSwitch>
   </ng-template>
 
-  <ng-template pTemplate="body" let-airline>
-      <tr>
-          <td *ngFor="let col of columns">
-            {{airline[col.field]}}
-          </td>
-      </tr>
-  </ng-template>
-
-  <ng-template pTemplate="summary">
-  </ng-template>
-
-</p-table>
+  </p-table>
+</div>
