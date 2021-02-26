@@ -28,9 +28,20 @@
 
     <ng-template pTemplate="body" let-airline>
         <tr>
+
             <td *ngFor="let col of columns" [ngStyle]="{'display': col.display}">
-              {{airline[col.field]}}
-            </td>
+
+              <div *ngIf="col.field !== 'logoSrc' else showLogo">
+                {{airline[col.field]}}
+              </div>
+
+              <ng-template #showLogo>
+                <div>
+                  <p-chip image='{{airline[col.field]}}'></p-chip>
+                </div>
+              </ng-template>
+             </td>
+
             <td style="width: 50px;">
               <button 
                 [ngStyle]="{'color': (this.favorites && this.favorites.includes(airline['code'])) ? 'pink' : 'gray'}"
@@ -62,4 +73,5 @@
   </ng-template>
 
   </p-table>
+
 </div>

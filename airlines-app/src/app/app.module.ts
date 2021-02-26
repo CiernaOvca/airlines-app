@@ -13,6 +13,7 @@ import { InputSwitchModule } from 'primeng/inputswitch'
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
+import { ChipModule } from 'primeng/chip';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { TableModule } from 'primeng/table';
     MenubarModule,
     ButtonModule,
     TableModule,
+    ChipModule,
   ],
   providers: [DataProviderService],
   bootstrap: [AppComponent]

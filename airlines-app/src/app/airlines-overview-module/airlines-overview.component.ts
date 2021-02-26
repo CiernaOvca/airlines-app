@@ -39,11 +39,10 @@ export class AirlinesOverviewComponent implements OnInit {
     ]
 
     this.columns = [
-      { header: 'Logo', field: '', width: '20%' },
+      { header: 'Logo', field: 'logoSrc', width: '10%' },
       { header: 'Name', field: 'defaultName', width: '50%' },
-      // { label: 'Logo', field: 'logoURL' },
       { field: 'code', display: 'none' },
-      { header: 'Code', field: 'code' }
+      { header: 'Code', field: 'code' } // tmp
     ];
   }
 
@@ -51,16 +50,20 @@ export class AirlinesOverviewComponent implements OnInit {
     console.log('event', $event);
     this.tableLoading = true;
     this.dataProviderService.getAirlinesOverviewData().subscribe((result) => {
-      console.log(result.slice(0, 100));
+      const data = result.map((item) => {
+        return {
+          ...item,
+          logoSrc: `https://www.kayak.com/${item.logoURL}`,
+        }
+      })
 
-      this.airlinesData = result.slice($event.first, $event.first + $event.rows);
+      console.log(data.slice(0, 100));
 
-      this.totalRecords = result.length;
+      this.airlinesData = data.slice($event.first, $event.first + $event.rows);
+      this.totalRecords = data.length;
       this.tableLoading = false;
     });
     this.favorites = JSON.parse(localStorage.getItem('favorites'));
-    console.log('favorites', JSON.parse(localStorage.getItem('favorites')));
-    console.log(this.favorites.includes('A4'));
   }
 
   addToFavorites(code: string) {
