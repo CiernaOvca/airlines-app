@@ -17,6 +17,12 @@
     (onLazyLoad)="loadData($event)"
     [(first)]="first"
   >
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex p-ai-center p-jc-between">
+          {{title}}
+      </div>
+    </ng-template>
+
     <ng-template pTemplate="header">
         <tr>
             <th *ngFor="let col of columns" [ngStyle]="{'display': col.display, 'width': col.width }">

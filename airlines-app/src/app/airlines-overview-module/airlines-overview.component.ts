@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { DataProviderService } from '../services/data-provider.service';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { AirlineDetailDialogComponent } from './airline-detail-dialog/airline-detail-dialog.component';
 
 export interface Airline {
   name: string;
@@ -27,10 +29,14 @@ export class AirlinesOverviewComponent implements OnInit {
   public first: number = 0;
   public showFavorites: boolean = false;
 
+  // general
+  public title = 'Airlines overview';
   private favorites: any[] = [];
+  private ref: DynamicDialogRef;
 
   constructor(
     private dataProviderService: DataProviderService,
+    private dialogService: DialogService,
   ) { }
 
   ngOnInit() {
@@ -46,7 +52,7 @@ export class AirlinesOverviewComponent implements OnInit {
     ];
   }
 
-  loadData($event: any, favorites?: boolean) {
+  loadData($event: any) {
     console.log('event', $event);
     this.tableLoading = true;
     this.dataProviderService.getAirlinesOverviewData().subscribe((result) => {
@@ -55,9 +61,7 @@ export class AirlinesOverviewComponent implements OnInit {
           ...item,
           logoSrc: `https://www.kayak.com/${item.logoURL}`,
         }
-      })
-
-      console.log(data.slice(0, 100));
+      });
 
       this.airlinesData = data.slice($event.first, $event.first + $event.rows);
       this.totalRecords = data.length;
@@ -67,29 +71,25 @@ export class AirlinesOverviewComponent implements OnInit {
   }
 
   addToFavorites(code: string) {
-    console.log('favorites before', JSON.parse(localStorage.getItem('favorites')));
     this.favorites = JSON.parse(localStorage.getItem('favorites'));
+
     if (this.favorites === null) this.favorites = [];
     this.favorites.push(code);
+
     localStorage.setItem('favorites', JSON.stringify(this.favorites));
-    console.log('favorites now', JSON.parse(localStorage.getItem('favorites')));
-    //localStorage.removeItem('favorites');
   }
 
   showFavoriteAirlines($event: any) {
+    console.log('showFavoriteAirlines', $event);
     if ($event.checked) {
-      this.filterAirlinesData(true);
-    }
-    else {
-      console.log('show all');
-    }
-  }
-
-  filterAirlinesData(favorites?: boolean) {
-    if (favorites) {
       this.airlinesData = this.airlinesData.filter(x => this.favorites.includes(x.code));
+      this.totalRecords = this.airlinesData.length;
+
+      this.title = 'Favorite airlines overview';
     }
     else {
+      this.loadData({first: 0, rows: 10});
+      this.title = 'Airlines overview';
     }
   }
 }
