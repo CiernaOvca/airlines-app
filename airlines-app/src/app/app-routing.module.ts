@@ -8,8 +8,7 @@ const routes: Routes = [
   },
   { 
     path: '**',
-    redirectTo: 'airlines',
-    //loadChildren: () => import('./airlines-module/airlines-overview.module').then(m => m.AirlinesOverviewModule) 
+    loadChildren: () => import('./airlines-module/airlines-overview.module').then(m => m.AirlinesOverviewModule) 
   },
 ];
 
