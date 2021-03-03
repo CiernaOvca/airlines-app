@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
+import { Airline } from '../airlines-overview-module/Airline';
 
 @Injectable()
 export class DataProviderService {
@@ -48,11 +49,21 @@ export class DataProviderService {
     return sbj;
   }
 
-  public getAirlineDetail(code: string): Subject<any> {
+  public getAirlineDetail(code: string): Subject<Airline> {
     const sbj = new Subject<any>();
     this.getAirlinesOverviewData().subscribe((result) => {
-      const airline = result.filter(x => x.code === code);
-      sbj.next(airline);
+      let airline: Airline = result.filter(x => x.code === code).map(item => {
+        return <Airline> ({
+          defaultName: item.defaultName,
+          code: item.code,
+          logoSrc: `https://www.kayak.com${item.logoURL}`,
+          contact: {
+            siteUrl: item.site,
+            phone: item.phone,
+          }
+        });
+      });
+      sbj.next(airline[0]);
       sbj.complete();
     });
     return sbj;

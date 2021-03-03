@@ -1,18 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem, MessageService } from 'primeng/api';
+import { MenuItem } from 'primeng/api';
 import { DataProviderService } from '../services/data-provider.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AirlineDetailDialogComponent } from './airline-detail-dialog/airline-detail-dialog.component';
-
-export interface Airline {
-  name: string;
-  year: number;
-  contact: {
-      number: string,
-      email: string,
-  };
-  logo: string;
-}
+import { Airline } from './Airline';
 
 @Component({
     selector: 'airlines-overview-component',
@@ -22,7 +13,7 @@ export class AirlinesOverviewComponent implements OnInit {
   public items: MenuItem[];
 
   // table settings
-  public airlinesData: any;
+  public airlinesData: Airline[];
   public columns: any;
   public tableLoading: boolean = false;
   public totalRecords: number;
@@ -56,16 +47,23 @@ export class AirlinesOverviewComponent implements OnInit {
     console.log('event', $event);
     this.tableLoading = true;
     this.dataProviderService.getAirlinesOverviewData().subscribe((result) => {
-      const data = result.map((item) => {
-        return {
-          ...item,
-          logoSrc: `https://www.kayak.com/${item.logoURL}`,
-        }
-      });
+      if (result) {
+        const data = result.map((item) => {
+          return <Airline> ({
+            defaultName: item.defaultName,
+            code: item.code,
+            logoSrc: `https://www.kayak.com${item.logoURL}`,
+            contact: {
+              siteUrl: item.site,
+              phone: item.phone,
+            }
+          });
+        });
 
-      this.airlinesData = data.slice($event.first, $event.first + $event.rows);
-      this.totalRecords = data.length;
-      this.tableLoading = false;
+        this.airlinesData = data.slice($event.first, $event.first + $event.rows);
+        this.totalRecords = data.length;
+        this.tableLoading = false;
+      }
     });
     this.favorites = JSON.parse(localStorage.getItem('favorites'));
   }
@@ -82,7 +80,7 @@ export class AirlinesOverviewComponent implements OnInit {
   showFavoriteAirlines($event: any) {
     console.log('showFavoriteAirlines', $event);
     if ($event.checked) {
-      this.airlinesData = this.airlinesData.filter(x => this.favorites.includes(x.code));
+      this.airlinesData = this.airlinesData.filter(airline => this.favorites.includes(airline.code));
       this.totalRecords = this.airlinesData.length;
 
       this.title = 'Favorite airlines overview';

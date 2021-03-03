@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DataProviderService } from 'src/app/services/data-provider.service';
+import { Airline } from '../Airline';
 
 @Component({
   templateUrl: './airline-detail-dialog.component.html',
@@ -8,7 +9,15 @@ import { DataProviderService } from 'src/app/services/data-provider.service';
 })
 export class AirlineDetailDialogComponent implements OnInit {
   // card
-  public airlineData: any = {};
+  public airlineData: Airline = {
+    defaultName: '',
+    code: '',
+    contact: {
+      phone: '',
+      siteUrl: '',
+    },
+    logoSrc: ''
+  };
 
   // button
   public isButtonDisabled: boolean = false;
@@ -22,11 +31,9 @@ export class AirlineDetailDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dataProvider.getAirlineDetail(this.config.data).subscribe((result) => {
-      this.airlineData = {
-        ...result,
-        logoSrc: `https://www.kayak.com${result.logoURL}`,
-      }
+    this.dataProvider.getAirlineDetail(this.config.data).subscribe((result): Airline => {
+      this.airlineData = result;
+      return result; 
     }, (err) => {
       this.isButtonDisabled = true;
       this.ref.close('err');
@@ -34,7 +41,7 @@ export class AirlineDetailDialogComponent implements OnInit {
   }
 
   visitPage($event: any) {
-    window.open(this.airlineData.site);
+    window.open(this.airlineData.contact.siteUrl);
   }
 
 }
