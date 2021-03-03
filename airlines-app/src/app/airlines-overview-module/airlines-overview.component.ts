@@ -46,24 +46,10 @@ export class AirlinesOverviewComponent implements OnInit {
   loadData($event: any) {
     console.log('event', $event);
     this.tableLoading = true;
-    this.dataProviderService.getAirlinesOverviewData().subscribe((result) => {
-      if (result) {
-        const data = result.map((item) => {
-          return <Airline> ({
-            defaultName: item.defaultName,
-            code: item.code,
-            logoSrc: `https://www.kayak.com${item.logoURL}`,
-            contact: {
-              siteUrl: item.site,
-              phone: item.phone,
-            }
-          });
-        });
-
-        this.airlinesData = data.slice($event.first, $event.first + $event.rows);
-        this.totalRecords = data.length;
-        this.tableLoading = false;
-      }
+    this.dataProviderService.getAirlinesOverviewData().subscribe((overviewData) => {
+      this.airlinesData = overviewData.slice($event.first, $event.first + $event.rows);
+      this.totalRecords = overviewData.length;
+      this.tableLoading = false;
     });
     this.favorites = JSON.parse(localStorage.getItem('favorites'));
   }
