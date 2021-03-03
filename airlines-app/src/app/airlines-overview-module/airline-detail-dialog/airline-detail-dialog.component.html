@@ -1,38 +1,37 @@
 
 <p-card>
 
-  <p-fieldset 
-    legend="General information"
-  >
-
-  <div class="p-field p-grid" style="margin-bottom: 20px;">
-    <label 
-      class="p-col-fixed" 
-      style="width:100px"
+  <div class="indent-bottom">
+    <p-fieldset 
+      legend="General information"
     >
-    {{this.airlineData.defaultName}}
-    </label>
-  </div>
 
-  <div class="p-field p-grid">
-    <label class="p-col-fixed" style="width:100px">{{this.airlineData.code}}</label>
-  </div>
+    <div class="p-field p-grid indent-bottom">
+      <label class="p-col-fixed label">
+        {{this.airlineData.defaultName}}
+      </label>
+    </div>
 
-  <img 
-    [src]="this.airlineData.logoSrc" 
-    [style]="{'width': '15%', 'float':'right', 'margin-top':'-75px' }"
-  >
-  </p-fieldset> 
+    <div class="p-field p-grid">
+      <label class="p-col-fixed label">
+        {{this.airlineData.code}}
+      </label>
+    </div>
+
+    <img 
+      class="logo-position"
+      [src]="this.airlineData.logoSrc" 
+    >
+    </p-fieldset>   
+  </div>
 
   <p-fieldset 
     legend="Contact information"
   >
 
-    <div class="p-field p-grid" style="margin-bottom: 20px;">
-      <label 
-        class="p-col-fixed" 
-        style="width:100px; margin-bottom: 25px;"
-      >{{this.airlineData.contact.phone}}
+    <div class="p-field p-grid indent-bottom ">
+      <label class="p-col-fixedlabel">
+        {{this.airlineData.contact.phone}}
       </label>
     </div>
 
@@ -42,7 +41,7 @@
       iconPos="left"
       class="p-button-sm"
       [disabled]="isButtonDisabled"
-      (onClick)="visitPage($event)"
+      (onClick)="visitPage()"
     ></p-button>
   </p-fieldset>
 

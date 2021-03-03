@@ -6,3 +6,16 @@
 .p-datatable-footer p {
     margin: 10px;
 }
+
+.indent-bottom {
+  margin-bottom: 20px;
+}
+
+.label {
+  width: 100px;
+}
+
+.logo-position {
+  float: right;
+  margin-top: -85px;
+}

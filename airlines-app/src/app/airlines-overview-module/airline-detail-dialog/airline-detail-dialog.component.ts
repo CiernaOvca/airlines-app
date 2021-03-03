@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+
 import { DataProviderService } from 'src/app/services/data-provider.service';
 import { Airline } from '../Airline';
 
@@ -40,7 +42,7 @@ export class AirlineDetailDialogComponent implements OnInit {
     });
   }
 
-  visitPage($event: any) {
+  visitPage() {
     window.open(this.airlineData.contact.siteUrl);
   }
 
