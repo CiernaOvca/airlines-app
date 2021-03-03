@@ -92,4 +92,14 @@ export class AirlinesOverviewComponent implements OnInit {
       this.title = 'Airlines overview';
     }
   }
+
+  showAirlineDetail(code: string) {
+    const airline = this.airlinesData.filter(a => a.code === code)[0];
+    let header = `${airline.defaultName}`;
+    this.ref = this.dialogService.open(AirlineDetailDialogComponent, {
+      header: header,
+      width: '550px',
+      data: code,
+    });
+  }
 }

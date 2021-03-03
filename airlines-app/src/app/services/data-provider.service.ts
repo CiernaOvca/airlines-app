@@ -47,5 +47,15 @@ export class DataProviderService {
 
     return sbj;
   }
+
+  public getAirlineDetail(code: string): Subject<any> {
+    const sbj = new Subject<any>();
+    this.getAirlinesOverviewData().subscribe((result) => {
+      const airline = result.filter(x => x.code === code);
+      sbj.next(airline);
+      sbj.complete();
+    });
+    return sbj;
+  }
   
 }

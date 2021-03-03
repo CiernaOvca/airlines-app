@@ -1,0 +1,49 @@
+
+<p-card>
+
+  <p-fieldset 
+    legend="General information"
+  >
+
+  <div class="p-field p-grid" style="margin-bottom: 20px;">
+    <label 
+      class="p-col-fixed" 
+      style="width:100px"
+    >
+    {{this.airlineData.defaultName}}
+    </label>
+  </div>
+
+  <div class="p-field p-grid">
+    <label class="p-col-fixed" style="width:100px">{{this.airlineData.code}}</label>
+  </div>
+
+  <img 
+    [src]="this.airlineData['logoSrc']" 
+    [style]="{'width': '15%', 'float':'right', 'margin-top':'-75px' }"
+  >
+  </p-fieldset> 
+
+  <p-fieldset 
+    legend="Contact information"
+  >
+
+    <div class="p-field p-grid" style="margin-bottom: 20px;">
+      <label 
+        class="p-col-fixed" 
+        style="width:100px; margin-bottom: 25px;"
+      >{{this.airlineData.phone}}
+      </label>
+    </div>
+
+    <p-button 
+      label="Visit page" 
+      icon="pi pi-external-link" 
+      iconPos="left"
+      class="p-button-sm"
+      [disabled]="isButtonDisabled"
+      (onClick)="visitPage($event)"
+    ></p-button>
+  </p-fieldset>
+
+</p-card>
