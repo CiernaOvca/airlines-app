@@ -5,7 +5,7 @@ import { MenuItem } from 'primeng/api';
 
 import { AirlineDetailDialogComponent } from './airline-detail-dialog/airline-detail-dialog.component';
 import { DataProviderService } from '../services/data-provider.service';
-import { Airline } from './Airline';
+import { Airline } from '../Model/Airline';
 
 @Component({
     selector: 'airlines-overview-component',
@@ -13,7 +13,7 @@ import { Airline } from './Airline';
 })
 export class AirlinesOverviewComponent {
   public items: MenuItem[] = [
-    { label: 'Home', icon: 'pi pi-fw pi-home' },
+    { label: 'Home', icon: 'pi pi-fw pi-home', routerLink: 'airlines' },
   ];
 
   // table settings

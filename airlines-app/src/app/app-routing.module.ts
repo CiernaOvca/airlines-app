@@ -1,7 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-const routes: Routes = [];
+const routes: Routes = [
+  { 
+    path: 'airlines',
+    loadChildren: () => import('./airlines-module/airlines-overview.module').then(m => m.AirlinesOverviewModule) 
+  },
+  { 
+    path: '**',
+    redirectTo: 'airlines',
+    //loadChildren: () => import('./airlines-module/airlines-overview.module').then(m => m.AirlinesOverviewModule) 
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],

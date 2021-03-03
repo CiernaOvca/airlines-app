@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 
-import { Airline } from '../airlines-overview-module/Airline';
+import { Airline } from '../Model/Airline';
 
 @Injectable()
 export class DataProviderService {
