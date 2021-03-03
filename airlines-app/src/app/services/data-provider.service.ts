@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Observer, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
+
 import { Airline } from '../airlines-overview-module/Airline';
 
 @Injectable()
@@ -12,40 +13,6 @@ export class DataProviderService {
 
   // if there is cached data, which is not older than 12 hours, return it
   // else get new one
-  getAirlinesOverviewDa(): Subject<any> {
-    const sbj = new Subject<any>();
-
-    if (this.isDataCached()) {
-      console.log('returning cached data');
-      setTimeout(() => {
-        sbj.next(JSON.parse(localStorage.getItem(this.airlineDataStorageKey)));
-        //sbj.complete();
-      });
-    }
-    else {
-      this.http.get('https://www.kayak.com/h/mobileapis/directory/airlines').subscribe((result) => {
-        const data = result;
-
-        // remove old data and save new
-        localStorage.removeItem(this.airlineDataStorageKey);
-        localStorage.setItem(this.airlineDataStorageKey, JSON.stringify(data));
-  
-        // remove information about last update and save new one
-        localStorage.removeItem(this.lastUpdateStorageKey);
-        localStorage.setItem(this.lastUpdateStorageKey, JSON.stringify(new Date()));
-
-        setTimeout(() => {
-          sbj.next(data);
-          //sbj.complete();
-        });
-        
-        console.log('returning fresh data');
-      });
-    }
-
-    return sbj;
-  }
-
   public getAirlinesOverviewData(): Subject<Airline[]> {
     const resultSubject = new Subject<Airline[]>();
 
@@ -70,12 +37,8 @@ export class DataProviderService {
         })
         resultSubject.next(result);
 
-        // remove old data and save new
-        localStorage.removeItem(this.airlineDataStorageKey);
+        // update cache items
         localStorage.setItem(this.airlineDataStorageKey, JSON.stringify(result));
-  
-        // remove information about last update and save new one
-        localStorage.removeItem(this.lastUpdateStorageKey);
         localStorage.setItem(this.lastUpdateStorageKey, JSON.stringify(new Date()));
       });
     }
@@ -89,7 +52,7 @@ export class DataProviderService {
 
     this.getAirlinesOverviewData().subscribe((result) => {
       let airline: Airline = result.find(airline => airline.code === code);
-      
+
       resultSubject.next(airline);
       resultSubject.complete();
     });
