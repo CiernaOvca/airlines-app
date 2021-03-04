@@ -44,7 +44,6 @@ export class DataProviderService {
         localStorage.setItem(this.lastUpdateStorageKey, JSON.stringify(new Date()));
       });
     }
-    // localStorage.removeItem(this.lastUpdateStorageKey);
 
     return resultSubject;
   }
