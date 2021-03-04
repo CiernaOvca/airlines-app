@@ -20,6 +20,7 @@ export class DataProviderService {
       setTimeout(() => {
         const result = JSON.parse(localStorage.getItem(this.airlineDataStorageKey));
         resultSubject.next(result);
+        resultSubject.complete();
       });
     }
     else {
@@ -36,6 +37,7 @@ export class DataProviderService {
           });
         })
         resultSubject.next(result);
+        resultSubject.complete();
 
         // update cache items
         localStorage.setItem(this.airlineDataStorageKey, JSON.stringify(result));
@@ -59,6 +61,18 @@ export class DataProviderService {
     return resultSubject;
   }
 
+  public getFavoriteAirlines(favorites: string[]): Subject<Airline[]> {
+    const resultSubject = new Subject<Airline[]>();
+    let favoriteAirlines: Airline[];
+
+    this.getAirlinesOverviewData().subscribe((result) => {
+      favoriteAirlines = result.filter((airline: Airline) => favorites.includes(airline.code));
+      resultSubject.next(favoriteAirlines);
+      resultSubject.complete();
+    });
+
+    return resultSubject;
+  }
   
   private isDataCached(): boolean {
     const data = localStorage.getItem(this.airlineDataStorageKey);

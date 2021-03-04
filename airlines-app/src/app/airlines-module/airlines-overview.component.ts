@@ -63,12 +63,14 @@ export class AirlinesOverviewComponent {
     localStorage.setItem('favorites', JSON.stringify(this.favorites));
   }
 
-  showFavoriteAirlines($event: any) {
+  filterFavoriteData($event: any) {
     if ($event.checked) {
-      this.airlinesData = this.airlinesData.filter((airline: Airline) => this.favorites.includes(airline.code));
-      this.totalRecords = this.airlinesData.length;
+      this.dataProviderService.getFavoriteAirlines(this.favorites).subscribe((result) => {
+        this.airlinesData = result;
+        this.totalRecords = this.airlinesData.length;
 
-      this.title = 'Favorite airlines overview';
+        this.title = 'Favorite airlines overview';
+      })
     }
     else {
       this.loadData({first: 0, rows: 10});
