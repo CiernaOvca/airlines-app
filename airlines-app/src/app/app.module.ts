@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 
+import { MenubarModule } from 'primeng/menubar';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -13,6 +15,8 @@ import { CoreModule } from './core/core.module';
     AppRoutingModule,
     CommonModule,
     CoreModule, 
+
+    MenubarModule,
   ],
   providers: [ ],
   bootstrap: [AppComponent]

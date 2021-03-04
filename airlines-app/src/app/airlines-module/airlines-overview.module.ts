@@ -14,7 +14,6 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputTextModule } from 'primeng/inputtext';
 import { FieldsetModule } from 'primeng/fieldset';
-import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
@@ -34,7 +33,6 @@ import { CardModule } from 'primeng/card';
     InputSwitchModule,
     InputTextModule,
     FieldsetModule,
-    MenubarModule,
     ButtonModule,
     DialogModule,
     TableModule,

@@ -1,20 +1,16 @@
 import { Component } from '@angular/core';
 
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { MenuItem } from 'primeng/api';
 
 import { AirlineDetailDialogComponent } from './airline-detail-dialog/airline-detail-dialog.component';
 import { DataProviderService } from '../services/data-provider.service';
-import { Airline } from '../Model/Airline';
+import { Airline } from '../airlines-module/models/Airline';
 
 @Component({
     selector: 'airlines-overview-component',
     templateUrl: './airlines-overview.component.html',
 })
 export class AirlinesOverviewComponent {
-  public items: MenuItem[] = [
-    { label: 'Home', icon: 'pi pi-fw pi-home', routerLink: 'airlines' },
-  ];
 
   // table settings
   public airlinesData: Airline[];
@@ -39,7 +35,6 @@ export class AirlinesOverviewComponent {
   ) { }
 
   loadData($event: {first: number, rows: number}) {
-    console.log('event', $event);
     this.tableLoading = true;
     this.dataProviderService.getAirlinesOverviewData().subscribe((overviewData: Airline[]) => {
       this.airlinesData = overviewData.slice($event.first, $event.first + $event.rows);

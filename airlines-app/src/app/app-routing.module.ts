@@ -6,10 +6,6 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./airlines-module/airlines-overview.module').then(m => m.AirlinesOverviewModule) 
   },
-  { 
-    path: '**',
-    loadChildren: () => import('./airlines-module/airlines-overview.module').then(m => m.AirlinesOverviewModule) 
-  },
 ];
 
 @NgModule({
