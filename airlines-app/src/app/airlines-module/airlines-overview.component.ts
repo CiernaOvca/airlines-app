@@ -51,8 +51,15 @@ export class AirlinesOverviewComponent {
     if (this.favorites === null) 
       this.favorites = [];
 
-    this.favorites.push(code);
-
+    // if the airline is already in favorites, remove it
+    if (this.favorites.includes(code)) {
+      this.favorites = this.favorites.filter((favorite: string) => favorite !== code);
+    }
+    // else add the airline to favorites
+    else {
+      this.favorites.push(code);
+    }
+    
     localStorage.setItem('favorites', JSON.stringify(this.favorites));
   }
 
